@@ -1,0 +1,8 @@
+{
+  "name": "VoxAI - AI Voice Conversational Assistant",
+  "description": "Production-grade voice conversational AI assistant with real-time audio visualization, STT transcription, contextual LLM intelligence, and natural TTS voice synthesis.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

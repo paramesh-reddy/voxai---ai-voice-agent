@@ -1,0 +1,215 @@
+{
+  "users": [
+    {
+      "id": "usr_demo_founder_001",
+      "fullName": "Alex Vance",
+      "email": "demo@voxai.internal",
+      "passwordHash": "$2b$10$rRJSdDtUVS2lR2psKmf3wuMLKvxq0.E4bj89PTgTUSkn4Q4QShq76",
+      "googleSubject": null,
+      "isActive": true,
+      "createdAt": "2026-10-25T05:51:59.817Z",
+      "updatedAt": "2026-10-25T05:51:59.818Z"
+    }
+  ],
+  "conversations": [
+    {
+      "id": "conv_e8e3ks5timvneunjq",
+      "userId": "usr_demo_founder_001",
+      "title": "Hello VoxAI, how are you today?",
+      "createdAt": "2026-10-25T05:52:09.398Z",
+      "updatedAt": "2026-10-25T05:53:09.565Z"
+    },
+    {
+      "id": "conv_b9kh583pkmvnevcc5",
+      "userId": "usr_demo_founder_001",
+      "title": "Hello VoxAI, in one short sentence, ...",
+      "createdAt": "2026-10-25T05:52:41.525Z",
+      "updatedAt": "2026-10-25T05:52:41.525Z"
+    },
+    {
+      "id": "conv_u8iki8fb3mvnexaqy",
+      "userId": "usr_demo_founder_001",
+      "title": "Hello VoxAI, what is voice AI in one...",
+      "createdAt": "2026-10-25T05:54:12.778Z",
+      "updatedAt": "2026-10-25T05:54:14.057Z"
+    },
+    {
+      "id": "conv_jxn3zklpymvng4j9n",
+      "userId": "usr_demo_founder_001",
+      "title": "New Voice Session",
+      "createdAt": "2026-10-25T06:27:50.027Z",
+      "updatedAt": "2026-10-25T06:27:50.027Z"
+    },
+    {
+      "id": "conv_d9a1ihvlmmvng53p1",
+      "userId": "usr_demo_founder_001",
+      "title": "hello",
+      "createdAt": "2026-10-25T06:28:16.501Z",
+      "updatedAt": "2026-10-25T06:28:53.848Z"
+    },
+    {
+      "id": "conv_g9s4z2kr4mvng6g87",
+      "userId": "usr_demo_founder_001",
+      "title": "New Voice Session",
+      "createdAt": "2026-10-25T06:29:19.399Z",
+      "updatedAt": "2026-10-25T06:29:19.399Z"
+    }
+  ],
+  "messages": [
+    {
+      "conversationId": "conv_e8e3ks5timvneunjq",
+      "role": "user",
+      "content": "Hello VoxAI, how are you today?",
+      "inputType": "text",
+      "id": "msg_n5xexnmqemvneunjq",
+      "createdAt": "2026-10-25T05:52:09.398Z"
+    },
+    {
+      "conversationId": "conv_b9kh583pkmvnevcc5",
+      "role": "user",
+      "content": "Hello VoxAI, in one short sentence, what is voice AI?",
+      "inputType": "text",
+      "id": "msg_sz2cbngt5mvnevcc5",
+      "createdAt": "2026-10-25T05:52:41.525Z"
+    },
+    {
+      "conversationId": "conv_e8e3ks5timvneunjq",
+      "role": "assistant",
+      "content": "Hello! I'm doing wonderfully today, thank you for asking. How are you doing, and how can I help you?",
+      "inputType": "voice",
+      "audioDataUrl": "data:audio/wav;base64,UklGRlw4BQBXQVZFZm10IBAAAAABAAEAwF0AAIC7AAACABAAZGF0YYAgBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8BAP//AQD//wEA//8BAP//AQAAAAEAAAABAAAAAQAAAAAAAAABAAAAAQD//wAA//8AAP//AQD//wAA//8AAP//AAD//wAA//8BAP//AQD//wEA//8BAP//AgD//wIA//8CAP//AgD//wIA//8CAP//AQD//wEA//8BAP",
+      "id": "msg_2ec644ho6mvnevxz1",
+      "createdAt": "2026-10-25T05:53:09.565Z"
+    },
+    {
+      "conversationId": "conv_u8iki8fb3mvnexaqy",
+      "role": "user",
+      "content": "Hello VoxAI, what is voice AI in one short sentence?",
+      "inputType": "text",
+      "id": "msg_3z4b0k85bmvnexaqz",
+      "createdAt": "2026-10-25T05:54:12.779Z"
+    },
+    {
+      "conversationId": "conv_u8iki8fb3mvnexaqy",
+      "role": "assistant",
+      "content": "Hello! I am VoxAI, your voice conversational assistant. How can I help you today?",
+      "inputType": "text",
+      "id": "msg_e3ph2fco1mvnexbqh",
+      "createdAt": "2026-10-25T05:54:14.057Z"
+    },
+    {
+      "conversationId": "conv_d9a1ihvlmmvng53p1",
+      "role": "user",
+      "content": "hello",
+      "inputType": "voice",
+      "id": "msg_mmzfdirzrmvng5li2",
+      "createdAt": "2026-10-25T06:28:39.578Z"
+    },
+    {
+      "conversationId": "conv_d9a1ihvlmmvng53p1",
+      "role": "assistant",
+      "content": "Hello! I am VoxAI, your voice conversational assistant. How can I help you today?",
+      "inputType": "voice",
+      "audioDataUrl": "data:audio/wav;base64,UklGRtw/BQBXQVZFZm10IBAAAAABAAEAwF0AAIC7AAACABAAZGF0YQAoBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "id": "msg_a9y13piz1mvng5wig",
+      "createdAt": "2026-10-25T06:28:53.848Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "sess_d784c2c412460a485fdbeb54",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "d72c785ed8f69dd1ee4a122d7e7a0ec186cdb32750b5d509937946856bd9e9cd",
+      "expiresAt": "2026-11-01T05:52:04.523Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T05:52:04.523Z"
+    },
+    {
+      "id": "sess_6b0a784c8ea162b84c5c1530",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "a100b31948c5a009722fb25129e1bb3418bc7949d7431fa104f61f229828143f",
+      "expiresAt": "2026-11-01T05:52:09.370Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T05:52:09.370Z"
+    },
+    {
+      "id": "sess_52fa42d2ac098772931db881",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "714515fee2c620c89b21449916f5282444209dd0189e69131d4f4d07559312e9",
+      "expiresAt": "2026-11-01T05:52:36.252Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T05:52:36.252Z"
+    },
+    {
+      "id": "sess_6d390e4c2cfad3d45f85c033",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "138a903b08aaca905d1c6ddc82f801e72d9f300e78c324441efcca3bba8e21cf",
+      "expiresAt": "2026-11-01T05:52:41.520Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T05:52:41.520Z"
+    },
+    {
+      "id": "sess_a1113a14aef919c81b55132f",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "809f50ae1ce87d85adaeef4ef89938ec3fdbde1abc832415c03c2d95864615e6",
+      "expiresAt": "2026-11-01T05:54:12.772Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T05:54:12.772Z"
+    },
+    {
+      "id": "sess_f7487e8a3d1c1ab09040fbf3",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "f8c939eeed927efa42981b1b94c44bfce2eaba0ec750394846957ed5559d7162",
+      "expiresAt": "2026-11-01T06:27:39.771Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T06:27:39.771Z"
+    },
+    {
+      "id": "sess_40b21b750fd541c7b1e45ae4",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "82dbbbbeec9737dbbd9b7851170366eb03b2309b64469fae1392de8fc44547eb",
+      "expiresAt": "2026-11-01T06:38:49.141Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T06:38:49.141Z"
+    },
+    {
+      "id": "sess_da4a1adbbdf75d106446239f",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "1db48a22be7cb2e3116601ba639d5d86c1d7901874403b9ce9565715dcadb2dd",
+      "expiresAt": "2026-11-01T06:38:55.056Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T06:38:55.056Z"
+    },
+    {
+      "id": "sess_d5389e77726a7586336337ef",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "bbb5e26057e4917284bbf812b8ad7e0f900970ca99db329b8fd960302b165e48",
+      "expiresAt": "2026-11-01T06:39:11.420Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T06:39:11.420Z"
+    },
+    {
+      "id": "sess_926c33fb4e6a8234a1107a4e",
+      "userId": "usr_demo_founder_001",
+      "tokenHash": "293e19cb873f67cabc9d4431606f7d6d3b7810490160d13e50af60c9d63d31fb",
+      "expiresAt": "2026-11-01T06:40:15.880Z",
+      "revokedAt": null,
+      "createdAt": "2026-10-25T06:40:15.881Z"
+    }
+  ],
+  "settings": [
+    {
+      "userId": "usr_demo_founder_001",
+      "defaultVoice": "Kore",
+      "playbackSpeed": 1,
+      "autoPlaySpeech": true,
+      "micNoiseSuppression": true,
+      "theme": "dark",
+      "audioRetentionDays": 0,
+      "language": "en-US",
+      "voicePitch": 1.15,
+      "voiceGender": "female",
+      "voiceStyle": "Cute, cheerful, warm, and sweet friendly tone"
+    }
+  ]
+}
