@@ -7,9 +7,9 @@ import { createSession, findSession, findUserById, revokeSession, User } from '.
 const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY_DAYS = 7;
 
-export interface AuthRequest extends Request {
+export type AuthRequest = Request & {
   user?: User;
-}
+};
 
 function jwtSecret(): string {
   return process.env.JWT_SECRET || 'voxai_jwt_production_secret_key_9921_alpha';
