@@ -455,16 +455,23 @@ async function seedDemo() {
 export default app;
 
 const onVercel = Boolean(process.env.VERCEL);
+const entry = (process.argv[1] || '').replace(/\\/g, '/');
+const startedDirectly = /(?:^|\/)index\.(?:ts|js|mjs|cjs)$/.test(entry);
 
-whenReady()
-  .then(() => {
-    if (onVercel) return;
-    app.listen(port, '0.0.0.0', () => {
-      console.log(`VoxAI API listening on http://127.0.0.1:${port}`);
-      console.log(`OpenAI configured: ${openaiConfigured()}`);
-    });
-  })
-  .catch((err) => {
-    console.error('Failed to start API:', err instanceof Error ? err.message : err);
-    if (!onVercel) process.exit(1);
+if (onVercel) {
+  whenReady().catch((err) => {
+    console.error('Database unavailable:', err instanceof Error ? err.message : err);
   });
+} else if (startedDirectly) {
+  whenReady()
+    .then(() => {
+      app.listen(port, '0.0.0.0', () => {
+        console.log(`VoxAI API listening on http://127.0.0.1:${port}`);
+        console.log(`OpenAI configured: ${openaiConfigured()}`);
+      });
+    })
+    .catch((err) => {
+      console.error('Failed to start API:', err instanceof Error ? err.message : err);
+      process.exit(1);
+    });
+}

@@ -3,7 +3,7 @@
   "buildCommand": "npm run build",
   "functions": {
     "server.ts": {
-      "includeFiles": "frontend/dist/**"
+      "includeFiles": "{dist,frontend/dist}/**"
     }
   }
 }
