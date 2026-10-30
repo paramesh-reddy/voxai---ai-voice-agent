@@ -48,6 +48,31 @@ const upload = multer({
   limits: { fileSize: 25 * 1024 * 1024 },
 });
 
+let bootPromise: Promise<void> | null = null;
+
+function whenReady(): Promise<void> {
+  if (!bootPromise) {
+    bootPromise = (async () => {
+      await initDatabase();
+      await seedDemo();
+    })();
+  }
+  return bootPromise;
+}
+
+app.use((req, res, next) => {
+  if (!req.path.startsWith('/api')) {
+    next();
+    return;
+  }
+  whenReady().then(() => next()).catch((err: unknown) => {
+    console.error('Database unavailable:', err instanceof Error ? err.message : err);
+    if (!res.headersSent) {
+      res.status(503).json({ detail: 'Database is unavailable. Set DATABASE_URL and try again.' });
+    }
+  });
+});
+
 function asyncRoute(handler: (req: Request, res: Response, next: NextFunction) => Promise<void>) {
   return (req: Request, res: Response, next: NextFunction) => {
     handler(req, res, next).catch(next);
@@ -427,16 +452,19 @@ async function seedDemo() {
   console.log('Demo user ready: demo@voxai.internal');
 }
 
-async function start() {
-  await initDatabase();
-  await seedDemo();
-  app.listen(port, '0.0.0.0', () => {
-    console.log(`VoxAI API listening on http://127.0.0.1:${port}`);
-    console.log(`OpenAI configured: ${openaiConfigured()}`);
-  });
-}
+export default app;
 
-start().catch((err) => {
-  console.error('Failed to start API:', err instanceof Error ? err.message : err);
-  process.exit(1);
-});
+const onVercel = Boolean(process.env.VERCEL);
+
+whenReady()
+  .then(() => {
+    if (onVercel) return;
+    app.listen(port, '0.0.0.0', () => {
+      console.log(`VoxAI API listening on http://127.0.0.1:${port}`);
+      console.log(`OpenAI configured: ${openaiConfigured()}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to start API:', err instanceof Error ? err.message : err);
+    if (!onVercel) process.exit(1);
+  });
