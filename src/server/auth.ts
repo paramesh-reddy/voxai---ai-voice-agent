@@ -8,9 +8,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'voxai_jwt_production_secret_key_99
 const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY_DAYS = 7;
 
-export interface AuthRequest extends Request {
+export type AuthRequest = Request & {
   user?: User;
-}
+};
 
 export function hashPassword(plain: string): Promise<string> {
   return bcrypt.hash(plain, 10);
