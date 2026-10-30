@@ -69,10 +69,11 @@ const databaseUrl = connectionString();
 const useSsl = /sslmode=(require|verify-ca|verify-full)|neon\.tech/i.test(databaseUrl);
 
 export const pool = new Pool({
-  connectionString: databaseUrl,
-  ssl: useSsl ? { rejectUnauthorized: false } : undefined,
+  connectionString: databaseUrl || 'postgresql://127.0.0.1:1/voxai',
+  ssl: databaseUrl && useSsl ? { rejectUnauthorized: false } : undefined,
   max: 5,
   idleTimeoutMillis: 20000,
+  connectionTimeoutMillis: 8000,
 });
 
 function iso(value: Date | string | null | undefined): string {
