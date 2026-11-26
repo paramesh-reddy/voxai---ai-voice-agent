@@ -13,6 +13,6 @@
     "moduleDetection": "force",
     "resolveJsonModule": true
   },
-  "include": ["server.ts", "backend/src/**/*.ts"],
+  "include": ["server.ts", "server.bundle.d.ts", "backend/src/**/*.ts"],
   "exclude": ["dist", "frontend", "node_modules"]
 }

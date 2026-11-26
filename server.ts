@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import express from 'express';
-import app from './backend/src/index.ts';
+
+const bundleName = './server.bundle.mjs';
+const loaded = (await import(bundleName)) as { default: express.Express };
+const app = loaded.default;
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
