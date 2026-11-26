@@ -1,5 +1,6 @@
-import './env';
-import express, { NextFunction, Request, Response } from 'express';
+import './env.ts';
+import express from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import multer from 'multer';
 import {
@@ -19,10 +20,9 @@ import {
   updateConversation,
   updateSettings,
   updateUser,
-  User,
-} from './db';
+} from './db.ts';
+import type { User } from './db.ts';
 import {
-  AuthRequest,
   comparePassword,
   generateAccessToken,
   generateRefreshToken,
@@ -31,8 +31,9 @@ import {
   requireAuth,
   revokeRefreshToken,
   verifyRefreshToken,
-} from './auth';
-import { generateChatResponse, openaiConfigured, synthesizeSpeech, transcribeAudio } from './ai';
+} from './auth.ts';
+import type { AuthRequest } from './auth.ts';
+import { generateChatResponse, openaiConfigured, synthesizeSpeech, transcribeAudio } from './ai.ts';
 
 const app = express();
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 8000;

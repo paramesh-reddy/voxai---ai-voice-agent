@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import { Request, Response, NextFunction } from 'express';
-import { createSession, findSession, findUserById, revokeSession, User } from './db';
+import type { Request, Response, NextFunction } from 'express';
+import { createSession, findSession, findUserById, revokeSession } from './db.ts';
+import type { User } from './db.ts';
 
 const ACCESS_TOKEN_EXPIRY = '15m';
 const REFRESH_TOKEN_EXPIRY_DAYS = 7;

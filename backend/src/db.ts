@@ -1,4 +1,4 @@
-import './env';
+import './env.ts';
 import { Pool } from 'pg';
 
 export interface User {
