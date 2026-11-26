@@ -1,5 +1,5 @@
 {
-  "name": "VoxAI - AI Voice Conversational Assistant",
+  "name": "Tara — Speak. Hear the answer.",
   "description": "Production-grade voice conversational AI assistant with real-time audio visualization, STT transcription, contextual LLM intelligence, and natural TTS voice synthesis.",
   "requestFramePermissions": [
     "microphone"

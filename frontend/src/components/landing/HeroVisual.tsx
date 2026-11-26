@@ -1,116 +1,46 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Volume2 } from 'lucide-react';
+
+const bars = [0.45, 0.7, 1, 0.62, 0.84, 0.5, 0.92, 0.66, 0.4];
 
 export const HeroVisual: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let frame = 0;
-    let raf = 0;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
-      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const draw = () => {
-      const width = canvas.clientWidth;
-      const height = canvas.clientHeight;
-      ctx.clearRect(0, 0, width, height);
-
-      const bars = 42;
-      const gap = 4;
-      const barWidth = Math.max(3, (width - gap * (bars - 1)) / bars);
-      for (let i = 0; i < bars; i += 1) {
-        const wave = Math.sin(frame * 0.045 + i * 0.38);
-        const wave2 = Math.cos(frame * 0.03 + i * 0.17);
-        const amount = reduced ? 0.45 : Math.abs(wave * 0.62 + wave2 * 0.38);
-        const barHeight = 18 + amount * (height * 0.72);
-        const x = i * (barWidth + gap);
-        const y = (height - barHeight) / 2;
-        const gradient = ctx.createLinearGradient(x, y, x, y + barHeight);
-        gradient.addColorStop(0, 'rgba(103, 232, 249, 0.95)');
-        gradient.addColorStop(0.55, 'rgba(99, 102, 241, 0.85)');
-        gradient.addColorStop(1, 'rgba(167, 139, 250, 0.35)');
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.roundRect(x, y, barWidth, barHeight, 8);
-        ctx.fill();
-      }
-
-      ctx.beginPath();
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = 'rgba(165, 243, 252, 0.85)';
-      for (let x = 0; x <= width; x += 4) {
-        const y =
-          height / 2 +
-          Math.sin(x * 0.02 + frame * 0.05) * (reduced ? 8 : 22) +
-          Math.sin(x * 0.008 + frame * 0.02) * (reduced ? 4 : 10);
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      frame += 1;
-      raf = requestAnimationFrame(draw);
-    };
-
-    resize();
-    draw();
-    window.addEventListener('resize', resize);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
   return (
-    <div className="relative animate-float">
-      <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-tr from-indigo-500/30 via-cyan-400/20 to-purple-500/20 blur-2xl animate-drift pointer-events-none" />
-      <div className="relative rounded-2xl overflow-hidden border border-indigo-500/30 bg-slate-950/80 shadow-2xl shadow-indigo-950/50">
-        <img
-          src="/images/voxai_soundwave_hero_1792906989489.jpg"
-          alt="VoxAI acoustic visualization"
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
-        />
-        <canvas ref={canvasRef} className="relative z-10 h-72 w-full sm:h-80" />
-        <div className="absolute bottom-4 left-4 right-4 z-20 p-4 rounded-xl bg-slate-950/85 border border-slate-800/90 backdrop-blur-md flex items-center justify-between shadow-lg">
-          <div className="flex items-center gap-3">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-tr from-indigo-600 to-cyan-400 text-white">
-              <span className="absolute inset-0 rounded-lg animate-ping bg-cyan-400/30" />
-              <Volume2 className="relative h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-white">Live Voice Pipeline</p>
-              <p className="text-[11px] text-slate-400">Listening · Thinking · Speaking</p>
-            </div>
+    <div className="rise rise-d2 relative">
+      <div className="card overflow-hidden">
+        <div className="flex items-center justify-between border-b border-line px-4 py-3">
+          <div className="flex items-center gap-2 text-sm">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            <span className="font-semibold">Listening</span>
+            <span className="text-mute">00:12</span>
           </div>
-          <Link
-            to="/register"
-            className="rounded-lg bg-indigo-600/20 px-3 py-1.5 text-xs font-medium text-cyan-300 hover:bg-indigo-600/40 transition-colors"
-          >
-            Try Now
+          <span className="text-[13px] text-mute">English · Kore</span>
+        </div>
+
+        <div className="flex h-16 items-end justify-center gap-1.5 px-6 pt-5" aria-hidden>
+          {bars.map((height, index) => (
+            <span
+              key={index}
+              className="eq-bar w-1.5 rounded-full bg-accent"
+              style={{ height: `${height * 100}%`, animationDelay: `${index * 0.08}s`, opacity: 0.45 + height * 0.55 }}
+            />
+          ))}
+        </div>
+
+        <div className="space-y-3 px-4 py-5">
+          <div className="ml-8 rounded-2xl rounded-tr-md bg-ink px-3.5 py-2.5 text-sm text-paper">
+            What’s a plain way to explain this to someone new on the team?
+          </div>
+          <div className="mr-6 rounded-2xl rounded-tl-md border border-line bg-panel-2 px-3.5 py-2.5 text-sm leading-relaxed">
+            Start with the outcome they care about, then the one constraint that actually changes the plan.
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between border-t border-line px-4 py-3 text-sm">
+          <span className="text-mute">The reply plays as soon as it’s ready.</span>
+          <Link to="/register" className="font-semibold text-accent hover:text-accent-strong">
+            Try a conversation
           </Link>
         </div>
-      </div>
-      <div className="pointer-events-none absolute -left-3 top-8 flex h-16 items-end gap-1 rounded-2xl border border-cyan-400/20 bg-slate-950/70 px-3 py-3 backdrop-blur animate-float-delayed">
-        {[0, 1, 2, 3, 4].map((bar) => (
-          <span
-            key={bar}
-            className="eq-bar w-1.5 rounded-full bg-gradient-to-t from-indigo-500 to-cyan-300"
-            style={{ animationDelay: `${bar * 0.12}s`, height: '100%' }}
-          />
-        ))}
       </div>
     </div>
   );
