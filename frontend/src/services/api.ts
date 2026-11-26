@@ -22,6 +22,11 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    if (error.response?.status === 502) {
+      error.response.data = {
+        detail: 'The API is not running. Start the backend on port 8000 and try again.',
+      };
+    }
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('voxai_refresh_token');

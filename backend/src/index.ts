@@ -80,7 +80,11 @@ function asyncRoute(handler: (req: Request, res: Response, next: NextFunction) =
 }
 
 function safeMessage(err: unknown, fallback: string): string {
-  const message = err instanceof Error ? err.message : fallback;
+  const message = err instanceof Error ? err.message : '';
+  const code = typeof err === 'object' && err && 'code' in err ? String((err as { code?: unknown }).code || '') : '';
+  if (code === 'invalid_api_key' || /incorrect api key/i.test(message)) {
+    return 'The OpenAI API key was rejected. Put a valid OPENAI_API_KEY in .env and restart the API.';
+  }
   if (message.includes('sk-') || message.toLowerCase().includes('api key')) {
     return fallback;
   }

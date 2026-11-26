@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Sidebar } from '../components/layout/Sidebar';
 import { VoiceVisualizer } from '../components/voice/VoiceVisualizer';
@@ -18,18 +18,16 @@ import {
   AlertCircle,
   Maximize2,
   Minimize2,
-  Sparkles,
-  StopCircle,
+  AudioLines,
+  Square,
   Globe,
   Sun,
   Moon,
-  ChevronDown,
 } from 'lucide-react';
 
 export const VoiceAssistantPage: React.FC = () => {
-  const { user, settings, theme, toggleTheme, updateSettings } = useAuth();
+  const { settings, theme, toggleTheme, updateSettings } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Navigation & Drawer
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -294,7 +292,7 @@ export const VoiceAssistantPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#080C14] light:bg-slate-50 text-slate-100 light:text-slate-900 transition-colors duration-200 overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-paper text-ink">
       {/* Sidebar Navigation */}
       {!fullscreen && (
         <Sidebar mobileOpen={mobileOpen} onCloseMobile={() => setMobileOpen(false)} />
@@ -303,146 +301,113 @@ export const VoiceAssistantPage: React.FC = () => {
       {/* Main Interface Area */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top Header */}
-        <header className="flex h-16 shrink-0 items-center justify-between border-b border-slate-800/80 light:border-slate-200 bg-[#080C14]/90 light:bg-white/95 px-4 sm:px-6 backdrop-blur-md transition-colors duration-200">
-          <div className="flex items-center gap-3 min-w-0">
+        <header className="flex h-14 shrink-0 items-center justify-between gap-3 border-b border-line bg-paper/85 px-4 backdrop-blur-md sm:px-6">
+          <div className="flex min-w-0 items-center gap-2">
             {!fullscreen && (
               <button
                 onClick={() => setMobileOpen(true)}
-                className="rounded-lg p-1.5 text-slate-400 light:text-slate-600 hover:bg-slate-800 light:hover:bg-slate-200 hover:text-white light:hover:text-slate-900 lg:hidden"
-                aria-label="Open sidebar"
+                className="icon-btn lg:hidden"
+                aria-label="Open navigation"
               >
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5" strokeWidth={1.75} />
               </button>
             )}
 
-            <div className="flex items-center gap-2 min-w-0">
-              <span className="flex h-2 w-2 shrink-0 rounded-full bg-cyan-400" />
-              <h1 className="text-xs sm:text-sm font-semibold text-white light:text-slate-900 truncate">
-                VoxAI Voice Agent
-              </h1>
+            <div className="flex min-w-0 items-center gap-2">
+              <span className={`h-2 w-2 shrink-0 rounded-full ${state === 'idle' ? 'bg-mute' : 'bg-accent'}`} />
+              <h1 className="truncate text-[15px] font-semibold">Talk</h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Language Selector Dropdown */}
-            <div className="relative">
-              <div className="flex items-center gap-1.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900 light:bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-200 light:text-slate-800 hover:border-slate-600 transition-colors">
-                <Globe className="h-3.5 w-3.5 text-cyan-400 light:text-indigo-600 shrink-0" />
-                <span className="text-sm shrink-0">{currentLangObj.flag}</span>
-                <select
-                  value={selectedLanguage}
-                  onChange={(e) => handleLanguageChange(e.target.value)}
-                  className="bg-transparent text-xs font-medium text-slate-200 light:text-slate-800 focus:outline-none cursor-pointer pr-1"
-                  aria-label="Select spoken language"
-                >
-                  {SUPPORTED_LANGUAGES.map((lang) => (
-                    <option
-                      key={lang.code}
-                      value={lang.code}
-                      className="bg-slate-900 light:bg-white text-slate-100 light:text-slate-900"
-                    >
-                      {lang.flag} {lang.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <label className="flex items-center gap-1.5 rounded-lg border border-line bg-panel px-2 py-1 text-sm">
+              <Globe className="h-3.5 w-3.5 shrink-0 text-mute" strokeWidth={1.75} />
+              <span className="sr-only">Language</span>
+              <span aria-hidden>{currentLangObj.flag}</span>
+              <select
+                value={selectedLanguage}
+                onChange={(e) => handleLanguageChange(e.target.value)}
+                className="max-w-[7.5rem] cursor-pointer bg-transparent text-sm focus:outline-none sm:max-w-none"
+                aria-label="Spoken language"
+              >
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <option key={lang.code} value={lang.code} className="bg-panel text-ink">
+                    {lang.flag} {lang.name}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-            {/* Cute Voice Persona Selector Dropdown */}
-            <div className="relative hidden md:block">
-              <div className="flex items-center gap-1.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900 light:bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-200 light:text-slate-800 hover:border-slate-600 transition-colors">
-                <Sparkles className="h-3.5 w-3.5 text-indigo-400 light:text-indigo-600 shrink-0" />
-                <select
-                  value={selectedVoice}
-                  onChange={(e) => handleVoiceChange(e.target.value)}
-                  className="bg-transparent text-xs font-medium text-slate-200 light:text-slate-800 focus:outline-none cursor-pointer"
-                  aria-label="Select voice persona"
-                >
-                  {VOICE_PERSONAS.map((v) => (
-                    <option
-                      key={v.id}
-                      value={v.id}
-                      className="bg-slate-900 light:bg-white text-slate-100 light:text-slate-900"
-                    >
-                      {v.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            <label className="hidden items-center gap-1.5 rounded-lg border border-line bg-panel px-2 py-1 text-sm md:flex">
+              <AudioLines className="h-3.5 w-3.5 shrink-0 text-mute" strokeWidth={1.75} />
+              <select
+                value={selectedVoice}
+                onChange={(e) => handleVoiceChange(e.target.value)}
+                className="cursor-pointer bg-transparent text-sm focus:outline-none"
+                aria-label="Voice"
+              >
+                {VOICE_PERSONAS.map((voice) => (
+                  <option key={voice.id} value={voice.id} className="bg-panel text-ink">
+                    {voice.name}
+                  </option>
+                ))}
+              </select>
+            </label>
 
-            {/* Dark / Light Mode Switcher */}
             <button
+              type="button"
               onClick={() => toggleTheme()}
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900 light:bg-slate-100 text-slate-300 light:text-slate-700 hover:text-white light:hover:text-slate-900 transition-all active:scale-95"
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="icon-btn"
+              title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              {theme === 'dark' ? (
-                <Sun className="h-4 w-4 text-amber-400" />
-              ) : (
-                <Moon className="h-4 w-4 text-indigo-600" />
-              )}
+              {theme === 'dark' ? <Sun className="h-4 w-4" strokeWidth={1.75} /> : <Moon className="h-4 w-4" strokeWidth={1.75} />}
             </button>
 
-            {/* New Session Button */}
-            <button
-              onClick={handleStartNewConversation}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 light:border-slate-300 bg-slate-900 light:bg-slate-100 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-slate-200 light:text-slate-800 hover:bg-slate-800 light:hover:bg-slate-200 transition-colors"
-              title="Start New Voice Session"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">New Session</span>
+            <button type="button" onClick={handleStartNewConversation} className="icon-btn" title="New conversation" aria-label="New conversation">
+              <Plus className="h-4 w-4" strokeWidth={1.75} />
             </button>
 
-            {/* Mute Toggle */}
             <button
+              type="button"
               onClick={() => {
                 if (state === 'speaking') stopActiveSpeech();
                 setIsMuted(!isMuted);
               }}
-              className={`rounded-lg p-2 text-xs transition-colors ${
-                isMuted
-                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                  : 'text-slate-400 light:text-slate-600 hover:bg-slate-800 light:hover:bg-slate-200 hover:text-slate-200 light:hover:text-slate-900'
-              }`}
-              title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+              className={`icon-btn ${isMuted ? 'text-danger' : ''}`}
+              title={isMuted ? 'Unmute' : 'Mute'}
+              aria-label={isMuted ? 'Unmute' : 'Mute'}
             >
-              {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+              {isMuted ? <VolumeX className="h-4 w-4" strokeWidth={1.75} /> : <Volume2 className="h-4 w-4" strokeWidth={1.75} />}
             </button>
 
-            {/* Fullscreen Toggle */}
             <button
+              type="button"
               onClick={() => setFullscreen(!fullscreen)}
-              className="rounded-lg p-2 text-slate-400 light:text-slate-600 hover:bg-slate-800 light:hover:bg-slate-200 hover:text-slate-200 light:hover:text-slate-900 transition-colors"
-              title={fullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+              className="icon-btn"
+              title={fullscreen ? 'Exit full screen' : 'Full screen'}
+              aria-label={fullscreen ? 'Exit full screen' : 'Full screen'}
             >
-              {fullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+              {fullscreen ? <Minimize2 className="h-4 w-4" strokeWidth={1.75} /> : <Maximize2 className="h-4 w-4" strokeWidth={1.75} />}
             </button>
           </div>
         </header>
 
-        {/* Content Body: Split View (Voice Sphere + Live Transcript) */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden">
-          {/* Left Column: Visual Voice Sphere & Live Captions */}
-          <div className="lg:col-span-7 flex flex-col justify-between p-4 sm:p-6 overflow-y-auto border-r border-slate-800/80 light:border-slate-200">
-            {/* Error Banner */}
+        <div className="grid min-h-0 flex-1 grid-cols-1 overflow-hidden lg:grid-cols-12">
+          <div className="flex flex-col justify-between overflow-y-auto border-r border-line p-4 sm:p-6 lg:col-span-7">
             {errorMessage && (
-              <div className="mb-4 rounded-xl border border-rose-500/40 bg-rose-500/10 p-3.5 text-xs text-rose-300 light:text-rose-700 flex items-start justify-between gap-3">
-                <div className="flex items-start gap-2.5">
-                  <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-rose-400" />
+              <div className="mb-4 flex items-start justify-between gap-3 rounded-xl border border-danger/30 bg-danger/10 px-3.5 py-3 text-sm text-danger">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={1.75} />
                   <span>{errorMessage}</span>
                 </div>
-                <button
-                  onClick={() => setErrorMessage(null)}
-                  className="text-rose-400 hover:text-rose-200 font-semibold"
-                >
+                <button type="button" onClick={() => setErrorMessage(null)} className="font-semibold">
                   Dismiss
                 </button>
               </div>
             )}
 
-            {/* Central Animated Audio Visualizer */}
-            <div className="flex-1 flex flex-col items-center justify-center min-h-[280px]">
+            <div className="flex min-h-[280px] flex-1 flex-col items-center justify-center">
               <VoiceVisualizer
                 state={state}
                 audioLevel={audioLevel}
@@ -452,64 +417,54 @@ export const VoiceAssistantPage: React.FC = () => {
               />
             </div>
 
-            {/* Active Dialogue Bubbles (Transcription & AI Response) */}
-            <div className="w-full max-w-xl mx-auto space-y-3 py-2">
-              {/* User live speech transcription */}
+            <div className="mx-auto w-full max-w-xl space-y-3 py-2">
               {liveTranscript && (
-                <div className="rounded-xl border border-cyan-500/30 bg-cyan-950/20 light:bg-cyan-50 light:border-cyan-200 p-3.5 text-xs text-cyan-200 light:text-cyan-900 shadow-xs">
-                  <p className="font-semibold text-cyan-400 light:text-cyan-700 text-[11px] uppercase tracking-wider mb-1">
-                    {state === 'recording' ? 'Hearing you say...' : 'You said:'}
+                <div className="rounded-2xl border border-line bg-panel px-4 py-3 text-sm">
+                  <p className="mb-1 text-[13px] font-semibold text-mute">
+                    {state === 'recording' ? 'Hearing' : 'You said'}
                   </p>
-                  <p className="text-slate-200 light:text-slate-800 italic">"{liveTranscript}"</p>
+                  <p>{liveTranscript}</p>
                 </div>
               )}
 
-              {/* Latest AI spoken response preview */}
               {lastAiResponse && (
-                <div className="rounded-xl border border-indigo-500/30 bg-indigo-950/20 light:bg-indigo-50 light:border-indigo-200 p-3.5 text-xs text-indigo-200 light:text-indigo-900 shadow-xs">
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="font-semibold text-indigo-400 light:text-indigo-700 text-[11px] uppercase tracking-wider">
-                      VoxAI ({currentVoiceObj.name}):
-                    </p>
+                <div className="rounded-2xl border border-line bg-accent-soft px-4 py-3 text-sm">
+                  <div className="mb-1 flex items-center justify-between gap-3">
+                    <p className="text-[13px] font-semibold text-mute">{currentVoiceObj.name}</p>
                     {state === 'speaking' && (
-                      <button
-                        onClick={stopActiveSpeech}
-                        className="flex items-center gap-1 text-[11px] text-rose-400 light:text-rose-600 hover:text-rose-300 font-medium"
-                      >
-                        <StopCircle className="h-3 w-3" />
-                        <span>Stop Voice</span>
+                      <button type="button" onClick={stopActiveSpeech} className="inline-flex items-center gap-1 text-[13px] font-semibold text-danger">
+                        <Square className="h-3 w-3 fill-current" strokeWidth={1.75} />
+                        Stop
                       </button>
                     )}
                   </div>
-                  <p className="text-slate-200 light:text-slate-800">{lastAiResponse}</p>
+                  <p>{lastAiResponse}</p>
                 </div>
               )}
             </div>
 
-            {/* Text Input Fallback Bar */}
-            <div className="pt-3 max-w-xl mx-auto w-full">
-              <form onSubmit={handleTextSubmit} className="relative flex items-center">
+            <div className="mx-auto w-full max-w-xl pt-3">
+              <form onSubmit={handleTextSubmit} className="relative">
                 <input
                   type="text"
                   value={textInput}
                   onChange={(e) => setTextInput(e.target.value)}
-                  placeholder={`Or type in ${currentLangObj.name} for VoxAI...`}
+                  placeholder={`Type in ${currentLangObj.name}, if you would rather not talk`}
                   disabled={state === 'thinking' || state === 'transcribing'}
-                  className="w-full rounded-xl border border-slate-700 light:border-slate-300 bg-slate-900/90 light:bg-white pl-4 pr-12 py-3 text-xs text-white light:text-slate-900 placeholder-slate-500 light:placeholder-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 shadow-inner"
+                  className="field py-3 pr-12"
                 />
                 <button
                   type="submit"
                   disabled={!textInput.trim() || state === 'thinking'}
-                  className="absolute right-2 p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-40 transition-colors"
-                  aria-label="Send text query"
+                  className="absolute right-1.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md bg-accent text-accent-ink disabled:opacity-40"
+                  aria-label="Send"
                 >
-                  <Send className="h-3.5 w-3.5" />
+                  <Send className="h-3.5 w-3.5" strokeWidth={1.75} />
                 </button>
               </form>
 
-              {/* Helpful Language & Prompt suggestions */}
-              <div className="flex flex-wrap items-center justify-center gap-2 mt-3 text-[11px] text-slate-400 light:text-slate-600">
-                <span className="text-[10px] uppercase font-mono tracking-wider opacity-70">Language: {currentLangObj.nativeName} ·</span>
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-sm text-mute">
+                <span>{currentLangObj.nativeName}</span>
                 {[
                   selectedLanguage.startsWith('te') ? 'ఈ రోజు గురించి ఒక ఆసక్తికరమైన విషయం చెప్పు' :
                   selectedLanguage.startsWith('kn') ? 'ಇವತ್ತಿನ ಬಗ್ಗೆ ಒಂದು ಆಸಕ್ತಿದಾಯಕ ವಿಷಯ ತಿಳಿಸಿ' :
@@ -520,21 +475,21 @@ export const VoiceAssistantPage: React.FC = () => {
                   selectedLanguage.startsWith('ja') ? 'おすすめの言葉を教えて' :
                   selectedLanguage.startsWith('de') ? 'Erzähl mir etwas Interessantes' :
                   'Tell me something interesting today'
-                ].map((prompt, i) => (
+                ].map((prompt) => (
                   <button
-                    key={i}
+                    key={prompt}
+                    type="button"
                     onClick={() => setTextInput(prompt)}
-                    className="hover:text-cyan-300 light:hover:text-indigo-600 transition-colors"
+                    className="hover:text-ink"
                   >
-                    · "{prompt}"
+                    {prompt}
                   </button>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right Column: Full Conversation Transcript */}
-          <div className="lg:col-span-5 h-full p-4 overflow-hidden hidden lg:block">
+          <div className="hidden h-full overflow-hidden p-4 lg:col-span-5 lg:block">
             <TranscriptPanel
               messages={messages}
               onPlaySpeech={(text, audioUrl) => playSpeechAudio(text, audioUrl)}
